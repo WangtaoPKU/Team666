@@ -43,13 +43,13 @@ Kali 针对树莓派的发行版，黑客的最爱。
 10. ArchLinux  
 ArchLinux 针对树莓派平台的版本。  
 
-我们小组选用Raspbain系统，该系统是官方系统，且开源资源最多，便于查阅资料和解决问题。
+我们小组选用Raspbain系统，该系统是官方系统，且开源资源最多，便于查阅资料和解决问题。  
 
 ### 编程环境
 平台上自带有C/C++和Python2/Python3编程所需常用工具  
 编译器：gcc，g++  
 调试器：gdb  
-编译工具：build-essential包所包含的make、autoconf、automake等
+编译工具：build-essential包所包含的make、autoconf、automake等  
 解释器：python2和python3  
 包管理：pip2和pip3  
 Python常用库如NumPy也是默认装好的  
