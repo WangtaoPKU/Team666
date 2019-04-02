@@ -5,4 +5,4 @@
 
 ### 作业
 1. [第一次作业 开发环境](https://github.com/WangtaoPKU/Team666/blob/master/homework/01/homework.md)
-2. 第二次作业
+2. [第二次作业 需求分析](https://github.com/WangtaoPKU/Team666/blob/master/homework/02/homework.md)
