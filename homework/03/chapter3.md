@@ -3,22 +3,23 @@
 #### 树莓派本地编译
  （1）获取源码
 下载地址：https://github.com/raspberrypi 
-git clone --depth=1 https://github.com/raspberrypi/linux
+
+'git clone --depth=1 https://github.com/raspberrypi/linux'
  ![1](1.png)
  
 树莓派所有的开源软件：
-linux:内核源码
-tools:编译内核和其他源码所需的工具——交叉编译器等
-firmware:树莓派的交叉编译好的二进制内核、模块、库、bootloader
-documentation:树莓派离线帮助文档（树莓派官方使用教程）
-userland：arm端用户空间的一些应用库的源码
-hats：Hardware Attached on Top，树莓派 B+型板子的扩展板资料
-maynard：一个gtk写成的桌面环境
-scratch：一个简易、可视化编程环境
-noobs:一个树莓派镜像管理工具，他可以让你在一个树莓派上部署多个镜像
-weston：一个应用程序
-target_fs：树莓派最小文件系统，使用busybox制作
-quake3：雷神之锤3有线开发源码firmwareb
+- linux:内核源码
+- tools:编译内核和其他源码所需的工具——交叉编译器等
+- firmware:树莓派的交叉编译好的二进制内核、模块、库、bootloader
+- documentation:树莓派离线帮助文档（树莓派官方使用教程）
+- userland：arm端用户空间的一些应用库的源码
+- hats：Hardware Attached on Top，树莓派 B+型板子的扩展板资料
+- maynard：一个gtk写成的桌面环境
+- scratch：一个简易、可视化编程环境
+- noobs:一个树莓派镜像管理工具，他可以让你在一个树莓派上部署多个镜像
+- weston：一个应用程序
+- target_fs：树莓派最小文件系统，使用busybox制作
+- quake3：雷神之锤3有线开发源码firmwareb
 （2）配置编译环境
 树莓派本地编译：交叉工具链，本身的编译工具就可以编译给自己使用，所以不用配置，只需要配置 KERNEL=kernel7 即可。
 可以用 export KERNEL=kernel7，一次设置之后此终端里所有命令都带有此环境变量。
