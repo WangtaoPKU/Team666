@@ -2,7 +2,7 @@
 ### 1 用默认配置编译一遍内核，将新的内核替换现有内核
 #### 树莓派本地编译
  （1）获取源码
-下载地址：https://github.com/raspberrypi
+下载地址：https://github.com/raspberrypi 
 git clone --depth=1 https://github.com/raspberrypi/linux
  ![1](1.png)
  
