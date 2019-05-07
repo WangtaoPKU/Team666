@@ -28,7 +28,6 @@ KERNEL=kernel7 make bcm2709_defconfig
 如果要使用树莓派自带的config的话：  
 sudo modprobe configs # 加载模块  
 zcat config.gz > .config # 获取配置  
-
 问题1：  
 bison: not found  
  ![2](2.png)  
@@ -88,7 +87,7 @@ sudo cp arch/arm/boot/zImage /boot/$KERNEL.img
   ![22](22.png)  
 更新之后的内核版本  
   ![23](23.png)  
-####主机编译  
+#### 主机编译  
 1 获取交叉编译工具和源码  
 源码：git clone git@github.com:raspberrypi/linux  
 交叉编译工具：git clone git@github.com:raspberrypi/tools  
@@ -117,9 +116,7 @@ ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- KERNEL=kernel7 make -j4 zImage modul
 直接用linux源码包里的工具：  
 ./scripts/mkknlimg ./arch/arm/boot/zImage ./kernel_new.img  
    ![33](33.png)  
-   ![34](34.png)  
-   ![35](35.png)  
-   ![36](36.png)  
+   ![34](34.png)   
 3 挂载树莓派sd卡  
 把树莓派的sd卡插入ubuntu系统电脑，树莓派的sd卡有两个分区：  
 一个fat分区，是boot相关的内容，kernel的img文件就放在这个分区里；  
@@ -150,7 +147,6 @@ sudo cp kernel_new.img /mnt/fat32/ $KERNEL.img
 编辑 mount/fat32/config.txt 文件，在最后加入一行：  
 sudo echo kernel=kernel_new.img >> ./mount/fat32/config.txt  
 kernel=kernel_new.img  
- 
 （3）复制其他相关文件  
 sudo cp arch/arm/boot/dts/*.dtb /mnt/fat32/  
 sudo cp arch/arm/boot/dts/overlays/*.dtb* /mnt/fat32/overlays/  
@@ -165,7 +161,7 @@ sudo umount /mnt/ext4
 更新之后的内核版本  
     ![47](47.png)  
 升级内核的另一个方法是将img文件复制到相同目录下，使用不同的文件名，如kernel-myconfig.img，然后修改boot目录下的config.txt文件，加入：kernel=kernel-myconfig.img，最后将SD卡插入树莓派启动系统。  
-###2 构建一个较小的Linux内核，内核版本选择现已安装到开发板的内核版本，比较裁剪前后内核映像文件的大小  
+### 2 构建一个较小的Linux内核，内核版本选择现已安装到开发板的内核版本，比较裁剪前后内核映像文件的大小  
 （1）裁剪内核  
 （Y=>N）  
 1）Mailbox Hardware Support --> BCM2835 Mailbox  
@@ -219,16 +215,16 @@ make后将新的内核安装到开发板运行测试；
    ![62](62.png)  
    ![63](63.png)  
 裁剪后的映像文件为4.9M，小于未裁剪时的5.1M  
-###3模块加载与卸载  
+### 3模块加载与卸载  
 （1）安装软件  
 sudo apt-get update  
 sudo apt-get install raspberrypi-kernel-headers  
    ![64](64.png)  
    ![65](65.png)  
 （2）编写hello_kernel.c和Makefile文件  
-hello_kernel.c  
+###### hello_kernel.c  
    ![66](66.png)  
-Makefile  
+###### Makefile  
    ![67](67.png)  
 （3）编译  
 make  
@@ -244,7 +240,7 @@ sudo make uninstall
    ![72](72.png)  
 dmesg查看模块信息  
    ![73](73.png)  
-###4 构建并安装一款文件系统。  
+### 4 构建并安装一款文件系统。  
 （1）fdisk 可以查看当前的文件系统的使用情况  
    ![74](74.png)  
 （2）创建分区  
