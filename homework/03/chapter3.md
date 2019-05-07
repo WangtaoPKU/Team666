@@ -33,7 +33,7 @@ zcat config.gz > .config # 获取配置
 问题1：  
 bison: not found  
  ![2](2.png)  
-sudo apt-get bison  
+sudo apt-get install bison  
  ![3](3.png)  
 问题2：  
 flex: not found    
@@ -133,7 +133,6 @@ mkdir mnt/fat32
 mkdir mnt/ext4  
 sudo mount /dev/sdc1 /mnt/fat32  
 sudo mount /dev/sdc2 /mnt/ext4  
-   ![38](38.png)  
    ![39](39.png)  
 sudo make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf-INSTALL_MOD_PATH=/mnt/ext4 modules_install  
 操作ext4分区，需要root权限。 
@@ -145,10 +144,7 @@ sudo cp /mnt/fat32/$KERNEL.img /mnt/fat32/$KERNEL-backup.img
     ![42](42.png)  
 前面已经用 mkknlimg 工具打包了kernel_new.img文件了，把它复制到boot分区并配置使用即可：  
 sudo cp kernel_new.img /mnt/fat32/ $KERNEL.img  
-    ![43](43.png)  
-编辑 mount/fat32/config.txt 文件，在最后加入一行：  
-sudo echo kernel=kernel_new.img >> ./mount/fat32/config.txt  
-kernel=kernel_new.img  
+    ![43](43.png)   
 （3）复制其他相关文件  
 sudo cp arch/arm/boot/dts/*.dtb /mnt/fat32/  
 sudo cp arch/arm/boot/dts/overlays/*.dtb* /mnt/fat32/overlays/  
