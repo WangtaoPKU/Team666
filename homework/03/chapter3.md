@@ -18,6 +18,7 @@
 - weston：一个应用程序
 - target_fs：树莓派最小文件系统，使用busybox制作
 - quake3：雷神之锤3有线开发源码firmwareb  
+
 （2）配置编译环境  
 树莓派本地编译：交叉工具链，本身的编译工具就可以编译给自己使用，所以不用配置，只需要配置 KERNEL=kernel7 即可。  
 可以用 export KERNEL=kernel7，一次设置之后此终端里所有命令都带有此环境变量。  
@@ -27,7 +28,8 @@
 KERNEL=kernel7 make bcm2709_defconfig  
 如果要使用树莓派自带的config的话：  
 sudo modprobe configs # 加载模块  
-zcat config.gz > .config # 获取配置  
+zcat config.gz > .config # 获取配置 
+
 问题1：  
 bison: not found  
  ![2](2.png)  
@@ -108,7 +110,7 @@ ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- KERNEL=kernel7 make menuconfig
   ![30](30.png)  
 对裁剪进行裁剪，见上  
 （2）编译  
-ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- KERNEL=kernel7 make -j4 zImage modules dtbs 2>&1 | tee build.log  
+ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- KERNEL=kernel7 make -j4 zImage modules dtbs  
    ![31](31.png)  
 编译完成  
    ![32](32.png)  
@@ -199,7 +201,7 @@ BCM2835不使用
 触摸屏不使用  
 (M=>N)  
 1）Device Drivers > Character devices   
-  ![59]59(.png)  
+  ![59](59.png)  
 基于硬件的“可信赖平台模块”。在一般情况下，建议选择N。  
 2）Device Drivers --> Input device support  
   ![60](60.png)  
@@ -222,9 +224,9 @@ sudo apt-get install raspberrypi-kernel-headers
    ![64](64.png)  
    ![65](65.png)  
 （2）编写hello_kernel.c和Makefile文件  
-###### hello_kernel.c  
+##### hello_kernel.c  
    ![66](66.png)  
-###### Makefile  
+##### Makefile  
    ![67](67.png)  
 （3）编译  
 make  
