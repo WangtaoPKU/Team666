@@ -2,12 +2,12 @@
 ### 1 用默认配置编译一遍内核，将新的内核替换现有内核
 #### 树莓派本地编译
  （1）获取源码
-下载地址：https://github.com/raspberrypi 
+下载地址：https://github.com/raspberrypi  
 
-'git clone --depth=1 https://github.com/raspberrypi/linux'
+' git clone --depth=1 https://github.com/raspberrypi/linux '
  ![1](1.png)
  
-树莓派所有的开源软件：
+树莓派所有的开源软件：  
 - linux:内核源码
 - tools:编译内核和其他源码所需的工具——交叉编译器等
 - firmware:树莓派的交叉编译好的二进制内核、模块、库、bootloader
@@ -20,26 +20,26 @@
 - weston：一个应用程序
 - target_fs：树莓派最小文件系统，使用busybox制作
 - quake3：雷神之锤3有线开发源码firmwareb
-（2）配置编译环境
-树莓派本地编译：交叉工具链，本身的编译工具就可以编译给自己使用，所以不用配置，只需要配置 KERNEL=kernel7 即可。
-可以用 export KERNEL=kernel7，一次设置之后此终端里所有命令都带有此环境变量。
-（3）配置config
-树莓派1使用的是 bcmrpi_defconfig，
-树莓派2、3使用的是 bcm2709_defconfig。
-KERNEL=kernel7 make bcm2709_defconfig
-如果要使用树莓派自带的config的话：
-sudo modprobe configs # 加载模块
-zcat config.gz > .config # 获取配置
+（2）配置编译环境  
+树莓派本地编译：交叉工具链，本身的编译工具就可以编译给自己使用，所以不用配置，只需要配置 KERNEL=kernel7 即可。  
+可以用 export KERNEL=kernel7，一次设置之后此终端里所有命令都带有此环境变量。  
+（3）配置config  
+树莓派1使用的是 bcmrpi_defconfig，  
+树莓派2、3使用的是 bcm2709_defconfig。  
+KERNEL=kernel7 make bcm2709_defconfig  
+如果要使用树莓派自带的config的话：  
+sudo modprobe configs # 加载模块  
+zcat config.gz > .config # 获取配置  
 
-问题1：
-bison: not found
- ![2](2.png)
-sudo apt-get bison
- ![3](3.png)
-问题2：
-flex: not found
- ![4](4.png)
-sudo apt-get install flex
+问题1：  
+bison: not found  
+ ![2](2.png)  
+sudo apt-get bison  
+ ![3](3.png)  
+问题2：  
+flex: not found  
+ ![4](4.png)  
+sudo apt-get install flex  
  ![5](5.png)
 完成
  ![6](6.png)
