@@ -240,13 +240,25 @@
 		return 0;
 	}
 	static void hello_kernel_exit(void){
-		printk("hello kernel exit!\n")
+		printk("Hello kernel exit!\n")
 	}
 	module_init(hello_kernel_init);
 	module_exit(hello_kernel_exit);
 	```
 	Makefile  
-	![67](67.png)  
+	``` makefile
+	obj-m += hello_kernel.o
+	KERNEL := /usr/src/linux-headers-4.14.98-v7+/
+	
+	all:
+		make -C $(KERNEL) M=$(shell pwd) modules
+	clean:
+		make -C $(KERNEL) M=$(shell pwd) clean
+	install:
+		insmod hello_kernel.ko
+	uninstall:
+		rmmod hello_kernel
+	```
 3. 编译  
 	`make`  
 	![68](68.png)  
