@@ -112,17 +112,17 @@
 	`sudo apt-get install zlib1g:i386`  
 	![28](28.png)  
 	`sudo apt-get install libc6-i386 lib32stdc++6 lib32gcc1 lib32ncurses5`  
-	（1）执行menuconfig  
+	1. 执行menuconfig  
 	`ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- KERNEL=kernel7 make menuconfig`  
 	![29](29.png)  
 	![30](30.png)  
 	对裁剪进行裁剪，见上  
-	（2）编译  
+	2. 编译  
 	`ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- KERNEL=kernel7 make -j4 zImage modules dtbs`  
 	![31](31.png)  
 	编译完成  
 	![32](32.png)  
-	（3）打包zImage文件  
+	3. 打包zImage文件  
 	直接用linux源码包里的工具：  
 	`./scripts/mkknlimg ./arch/arm/boot/zImage ./kernel_new.img`  
 	![33](33.png)  
@@ -245,6 +245,7 @@
 	module_init(hello_kernel_init);
 	module_exit(hello_kernel_exit);
 	```
+
 	Makefile  
 	``` makefile
 	obj-m += hello_kernel.o
@@ -259,15 +260,18 @@
 	uninstall:
 		rmmod hello_kernel
 	```
+
 3. 编译  
 	`make`  
 	![68](68.png)  
 	![69](69.png)  
+
 4. 安装模块  
 	`sudo make install`  
 	![70](70.png)  
 	dmesg查看模块信息  
 	![71](71.png)  
+
 5. 卸载模块  
 	`sudo make uninstall`  
 	![72](72.png)  
@@ -275,6 +279,7 @@
 	![73](73.png)  
 
 ### 四、构建并安装一款文件系统。  
+
 1. fdisk 可以查看当前的文件系统的使用情况  
 	![74](74.png)  
 2. 创建分区  
