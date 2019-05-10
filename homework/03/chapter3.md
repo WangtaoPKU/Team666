@@ -96,7 +96,8 @@
 	更新之后的内核版本  
 	![23](23.png)  
 
-#### 主机编译  
+#### 主机编译
+
 1. 获取交叉编译工具和源码  
 	源码：`git clone git@github.com:raspberrypi/linux`  
 	交叉编译工具：`git clone git@github.com:raspberrypi/tools`  
@@ -143,7 +144,7 @@
 		`sudo mount /dev/sdc1 /mnt/fat32`  
 		`sudo mount /dev/sdc2 /mnt/ext4`  
 		![39](39.png)  
-		`sudo make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf-INSTALL_MOD_PATH=/mnt/ext4 modules_install`  
+		`sudo make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- INSTALL_MOD_PATH=/mnt/ext4 modules_install`  
 		操作ext4分区，需要root权限。 
 		![40](40.png)  
 		![41](41.png)  
@@ -168,7 +169,9 @@
 		更新之后的内核版本  
 		![47](47.png)  
 		升级内核的另一个方法是将img文件复制到相同目录下，使用不同的文件名，如kernel-myconfig.img，然后修改boot目录下的config.txt文件，加入：`kernel=kernel-myconfig.img`，最后将SD卡插入树莓派启动系统。  
-### 二、构建一个较小的Linux内核，内核版本选择现已安装到开发板的内核版本，比较裁剪前后内核映像文件的大小  
+
+### 二、构建一个较小的Linux内核，内核版本选择现已安装到开发板的内核版本，比较裁剪前后内核映像文件的大小
+
 1. 裁剪内核  
 	（Y=>N）  
 	1. Mailbox Hardware Support --> BCM2835 Mailbox  
@@ -223,7 +226,8 @@
 	![63](63.png)  
 	裁剪后的映像文件为4.9M，小于未裁剪时的5.1M  
 
-### 三、模块加载与卸载  
+### 三、模块加载与卸载
+
 1. 安装软件  
 	`sudo apt-get update`  
 	`sudo apt-get install raspberrypi-kernel-headers`  
@@ -282,6 +286,7 @@
 
 1. fdisk 可以查看当前的文件系统的使用情况  
 	![74](74.png)  
+
 2. 创建分区  
 	`disk /dev/mmcblk0`  
 	![75](75.png)  
@@ -294,12 +299,14 @@
 	![78](78.png)  
 	![79](79.png)  
 	新增加了/dev/mmcblk0p5  
+
 3. 格式化分区为需要的文件系统  
 	`partprobe`  
 	![80](80.png)  
 	该命令强制让内核重新找一次分区表  
 	`mkfs -t ext3 /dev/mmcblk0p5`  
 	![81](81.png)  
+
 4. 挂载文件系统  
 	`mount /dev/mmcblk0p5 /mnt/ext3fs`  
 	![82](82.png)  
