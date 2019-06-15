@@ -1,55 +1,55 @@
 ## 第四章 项目实现 
 我们将搭建一个简便、实用的 NAS 云盘系统，在这个中心化的存储系统中存储数据，并且让它每晚都会自动的备份增量数据，我们将利用 NFS 文件系统将磁盘挂载到同一网络下的不同设备上，使用 Nextcloud 来离线访问数据、分享数据，并结合transmission作为下载机。 
 #### 1 准备USB磁盘驱动器 
-为了更好地读写数据，我们建议使用 `ext4` 文件系统去格式化磁盘。首先，必须先找到连接到树莓派的磁盘。你可以在 `/dev/sd/<x>` 中找到磁盘设备。使用命令 `fdisk -l`，你可以找到刚刚连接的USB 磁盘驱动器。请注意，操作下面的步骤将会清除 USB 磁盘驱动器上的所有数据，请做好备份。 
-`pi@raspberrypi:~ $ sudo fdisk -l
-<...>
-Disk /dev/sda: 931.5 GiB, 1000204886016 bytes, 1953525168 sectors
-Units: sectors of 1 * 512 = 512 bytes
-Sector size (logical/physical): 512 bytes / 512 bytes
-I/O size (minimum/optimal): 512 bytes / 512 bytes
-Disklabel type: dos
-Disk identifier: 0xe8900690
-Device     Boot Start        End    Sectors   Size Id Type
-/dev/sda1        2048 1953525167 1953523120 931.5G 83 Linux
-Disk /dev/sdb: 931.5 GiB, 1000204886016 bytes, 1953525168 sectors
-Units: sectors of 1 * 512 = 512 bytes
-Sector size (logical/physical): 512 bytes / 512 bytes
-I/O size (minimum/optimal): 512 bytes / 512 bytes
-Disklabel type: dos
-Disk identifier: 0x6aa4f598
-Device     Boot Start        End    Sectors   Size Id Type
-/dev/sdb1  *     2048 1953521663 1953519616 931.5G  83 Linux` 
+为了更好地读写数据，我们建议使用 `ext4` 文件系统去格式化磁盘。首先，必须先找到连接到树莓派的磁盘。你可以在 `/dev/sd/<x>` 中找到磁盘设备。使用命令 `fdisk -l`，你可以找到刚刚连接的USB 磁盘驱动器。请注意，操作下面的步骤将会清除 USB 磁盘驱动器上的所有数据，请做好备份。  
+`pi@raspberrypi:~ $ sudo fdisk -l 
+<...> 
+Disk /dev/sda: 931.5 GiB, 1000204886016 bytes, 1953525168 sectors 
+Units: sectors of 1 * 512 = 512 bytes 
+Sector size (logical/physical): 512 bytes / 512 bytes 
+I/O size (minimum/optimal): 512 bytes / 512 bytes 
+Disklabel type: dos 
+Disk identifier: 0xe8900690 
+Device     Boot Start        End    Sectors   Size Id Type 
+/dev/sda1        2048 1953525167 1953523120 931.5G 83 Linux 
+Disk /dev/sdb: 931.5 GiB, 1000204886016 bytes, 1953525168 sectors 
+Units: sectors of 1 * 512 = 512 bytes 
+Sector size (logical/physical): 512 bytes / 512 bytes 
+I/O size (minimum/optimal): 512 bytes / 512 bytes 
+Disklabel type: dos 
+Disk identifier: 0x6aa4f598 
+Device     Boot Start        End    Sectors   Size Id Type 
+/dev/sdb1  *     2048 1953521663 1953519616 931.5G  83 Linux`  
 由于这些设备是连接到树莓派的唯一的磁盘，所以我们可以很容易的辨别出` /dev/sda` 和 `/dev/sdb` 就是那两个 USB 磁盘驱动器。每个磁盘末尾的分区表提示了在执行以下的步骤后如何查看，这些步骤将会格式化磁盘并创建分区表。为每个 USB 磁盘驱动器按以下步骤进行操作。 
-（1）删除磁盘分区表，
-创建一个新的并且只包含一个分区的新分区表。在 `fdisk` 中，你可以使用交互单字母命令来告诉程序你想要执行的操作。只需要在提示符 `Command(m for help):` 后输入相应的字母即可（可以使用` m` 命令获得更多详细信息） 
-`pi@raspberrypi:~ $ sudo fdisk /dev/sda
-Welcome to fdisk (util-linux 2.29.2).
-Changes will remain in memory only, until you decide to write them.
-Be careful before using the write command.
-Command (m for help): o
-Created a new DOS disklabel with disk identifier 0x9c310964.
-Command (m for help): n
-Partition type
-   p   primary (0 primary, 0 extended, 4 free)
-   e   extended (container for logical partitions)
-Select (default p): p
-Partition number (1-4, default 1):
+（1）删除磁盘分区表  
+创建一个新的并且只包含一个分区的新分区表。在 `fdisk` 中，你可以使用交互单字母命令来告诉程序你想要执行的操作。只需要在提示符 `Command(m for help):` 后输入相应的字母即可（可以使用` m` 命令获得更多详细信息）  
+`pi@raspberrypi:~ $ sudo fdisk /dev/sda 
+Welcome to fdisk (util-linux 2.29.2). 
+Changes will remain in memory only, until you decide to write them. 
+Be careful before using the write command. 
+Command (m for help): o 
+Created a new DOS disklabel with disk identifier 0x9c310964. 
+Command (m for help): n 
+Partition type 
+   p   primary (0 primary, 0 extended, 4 free) 
+   e   extended (container for logical partitions) 
+Select (default p): p 
+Partition number (1-4, default 1): 
 First sector (2048-1953525167, default 2048):
-Last sector, +sectors or +size{K,M,G,T,P} (2048-1953525167, default 1953525167):
-Created a new partition 1 of type 'Linux' and of size 931.5 GiB.
-Command (m for help): p
-Disk /dev/sda: 931.5 GiB, 1000204886016 bytes, 1953525168 sectors
-Units: sectors of 1 * 512 = 512 bytes
-Sector size (logical/physical): 512 bytes / 512 bytes
-I/O size (minimum/optimal): 512 bytes / 512 bytes
-Disklabel type: dos
-Disk identifier: 0x9c310964
-Device     Boot Start        End    Sectors   Size Id Type
-/dev/sda1        2048 1953525167 1953523120 931.5G 83 Linux
-Command (m for help): w
-The partition table has been altered.
-Syncing disks.` 
+Last sector, +sectors or +size{K,M,G,T,P} (2048-1953525167, default 1953525167): 
+Created a new partition 1 of type 'Linux' and of size 931.5 GiB. 
+Command (m for help): p 
+Disk /dev/sda: 931.5 GiB, 1000204886016 bytes, 1953525168 sectors 
+Units: sectors of 1 * 512 = 512 bytes 
+Sector size (logical/physical): 512 bytes / 512 bytes 
+I/O size (minimum/optimal): 512 bytes / 512 bytes 
+Disklabel type: dos 
+Disk identifier: 0x9c310964 
+Device     Boot Start        End    Sectors   Size Id Type 
+/dev/sda1        2048 1953525167 1953523120 931.5G 83 Linux 
+Command (m for help): w 
+The partition table has been altered. 
+Syncing disks.`  
 （2）格式化新建分区 
 我们将用` ext4` 文件系统格式化新创建的分区` /dev/sda1` 
 `pi@raspberrypi:~ $ sudo mkfs.ext4 /dev/sda1
