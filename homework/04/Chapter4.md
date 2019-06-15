@@ -2,11 +2,11 @@
 我们将搭建一个简便、实用的 NAS 云盘系统，在这个中心化的存储系统中存储数据，并且让它每晚都会自动的备份增量数据，我们将利用 NFS 文件系统将磁盘挂载到同一网络下的不同设备上，使用 Nextcloud 来离线访问数据、分享数据，并结合transmission作为下载机。 
 #### 1 准备USB磁盘驱动器 
 为了更好地读写数据，我们建议使用 `ext4` 文件系统去格式化磁盘。首先，必须先找到连接到树莓派的磁盘。你可以在 `/dev/sd/<x>` 中找到磁盘设备。使用命令 `fdisk -l`，你可以找到刚刚连接的USB 磁盘驱动器。请注意，操作下面的步骤将会清除 USB 磁盘驱动器上的所有数据，请做好备份。  
-`pi@raspberrypi:~ $ sudo fdisk -l  
-<...>  
-Disk /dev/sda: 931.5 GiB, 1000204886016 bytes, 1953525168 sectors  
-Units: sectors of 1 * 512 = 512 bytes  
-Sector size (logical/physical): 512 bytes / 512 bytes  
+`pi@raspberrypi:~ $ sudo fdisk -l  `
+`<...> ` 
+`Disk /dev/sda: 931.5 GiB, 1000204886016 bytes, 1953525168 sectors  `
+`Units: sectors of 1 * 512 = 512 bytes  `
+`Sector size (logical/physical): 512 bytes / 512 bytes  
 I/O size (minimum/optimal): 512 bytes / 512 bytes  
 Disklabel type: dos  
 Disk identifier: 0xe8900690  
