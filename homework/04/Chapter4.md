@@ -1,7 +1,7 @@
 ## 第四章 项目实现 
 我们将搭建一个简便、实用的 NAS 云盘系统，在这个中心化的存储系统中存储数据，并且让它每晚都会自动的备份增量数据，我们将利用 NFS 文件系统将磁盘挂载到同一网络下的不同设备上，使用 Nextcloud 来离线访问数据、分享数据，并结合transmission作为下载机。 
 #### 1 准备USB磁盘驱动器 
-为了更好地读写数据，我们建议使用 `ext4` 文件系统去格式化磁盘。首先，必须先找到连接到树莓派的磁盘。你可以在 `/dev/sd/<x>` 中找到磁盘设备。使用命令 `fdisk -l`，你可以找到刚刚连接的USB 磁盘驱动器。请注意，操作下面的步骤将会清除 USB 磁盘驱动器上的所有数据，请做好备份。
+为了更好地读写数据，我们建议使用 `ext4` 文件系统去格式化磁盘。首先，必须先找到连接到树莓派的磁盘。可以在 `/dev/sd/<x>` 中找到磁盘设备。使用命令 `fdisk -l`，可以找到刚刚连接的USB 磁盘驱动器。请注意，操作下面的步骤将会清除 USB 磁盘驱动器上的所有数据，请做好备份。
 ```
 pi@raspberrypi:~ $ sudo fdisk -l
 <...>
@@ -67,7 +67,7 @@ Creating journal (1024 blocks): done
 Writing superblocks and filesystem accounting information: done
 ```
 （3）建立标签   
-重复以上步骤后，让我们根据用途来对它们建立标签   
+重复以上步骤后，我们根据用途来对它们建立标签   
 ```
 pi@raspberrypi:~ $ sudo e2label /dev/sda1 data  
 pi@raspberrypi:~ $ sudo e2label /dev/sdb1 backup 
@@ -98,8 +98,8 @@ pi@raspberrypi3:/nas/backup $ mount
 /dev/sda1 on /nas/data type ext4 (rw,relatime,data=ordered)  
 /dev/sdb1 on /nas/backup type ext4 (rw,relatime,data=ordered)
 ```
-进入对应目录以确保 `autofs `能够挂载设备。`autofs` 会跟踪文件系统的访问记录，并随时挂载所需要的设备。然后 mount 命令会显示这两个 USB 磁盘驱动器已经挂载到我们想要的位置了。   
-2 挂载网络设备    
+进入对应目录以确保 `autofs `能够挂载设备。`autofs` 会跟踪文件系统的访问记录，并随时挂载所需要的设备。然后 `mount` 命令会显示这两个 USB 磁盘驱动器已经挂载到我们想要的位置了。   
+#### 2 挂载网络设备    
 （1）安装NFS服务器    
 设置了基本的网络存储，我们希望将它安装到远程 Linux 机器上。这里使用 NFS 文件系统，首先在树莓派上安装 NFS 服务器   
 `pi@raspberrypi:~ $ sudo apt install nfs-kernel-server`  
@@ -107,9 +107,9 @@ pi@raspberrypi3:/nas/backup $ mount
 需要告诉 NFS 服务器公开` /nas/data` 目录，这是从树莓派外部可以访问的唯一设备（另一个用于备份）。编辑 `/etc/exports` 添加如下内容以允许所有可以访问 NAS 云盘的设备挂载存储   
 `/nas/data *(rw,sync,no_subtree_check)`   
 经过上面的配置，任何人都可以访问数据，只要他们可以访问 NFS 所需的端口：111 和 2049。我通过上面的配置，只允许通过路由器防火墙访问到我的家庭网络的 22 和 443 端口。这样，只有在家庭网络中的设备才能访问 NFS 服务器   
-3 实现BT下载   
+#### 3 实现BT下载   
 （1）安装Transmission   
-`sudo apt-get install transmission-daemon`
+`sudo apt-get install transmission-daemon`  
 在移动硬盘上创建两个文件夹Download和DownloadCache   
 （2）配置权限   
 `sudo usermod -a -G debian-transmission pi`  
@@ -131,7 +131,7 @@ sudo service transmission-daemon restart
 然后在浏览器中访问IP/域名加 9091端口输入用户名和密码，默认都是：transmission   
 修改用户名和密码的方法：   
 先停止服务： `sudo service transmission-daemon stop`  
-修改配置文件，下面两项分别是用户和密码，你看到这个是加密的密码，没关系直接把密码改为你想要的密码明文就可以：
+修改配置文件，下面两项分别是用户和密码，直接把密码改为你想要的密码明文就可以：
 ```
 “rpc-username”: “transmission”,  
 “rpc-password”: “{2dc2c41724aab07ccc301e97f56360cb35f8ba1fGVVrdHDX”, 
