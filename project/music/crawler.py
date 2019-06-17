@@ -14,10 +14,6 @@ from selenium.common.exceptions import TimeoutException;
 from selenium.webdriver.firefox.options import Options as options;
 import argparse;
 
-parser = argparse.ArgumentParser(prog="download", conflict_handler = "resolve");
-parser.add_argument("--key", "-k", type = str, required = True, help = "key word of the music to search");
-args = parser.parse_args();
-
 def search(name):
 	url = "https://music.163.com/"
 	opt = options();
@@ -40,9 +36,16 @@ def search(name):
 
 	list_link = [x.split("=")[-1] for x in list_link];
 
+	browser.close();
+
 	return list_link;
 
-#name = "久石让"
-name = args.key;
-result = search(name);
-print(result)
+if __name__ == "__main__":
+	parser = argparse.ArgumentParser(prog="download", conflict_handler = "resolve");
+	parser.add_argument("--key", "-k", type = str, required = True, help = "key word of the music to search");
+	args = parser.parse_args();
+
+	#name = "久石让"
+	name = args.key;
+	result = search(name);
+	print(result)
