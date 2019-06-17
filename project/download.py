@@ -9,7 +9,6 @@ import sys;
 import argparse;
 
 parser = argparse.ArgumentParser(prog="download", conflict_handler = "resolve");
-host = socket.gethostname();
 parser.add_argument("--id", "-i", type = str, required = True, help = "ID of the music to download");
 args = parser.parse_args();
 
