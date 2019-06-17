@@ -7,4 +7,4 @@
 1. [第一章 开发环境](https://github.com/WangtaoPKU/Team666/blob/master/homework/01/homework.md)
 2. [第二章 需求分析](https://github.com/WangtaoPKU/Team666/blob/master/homework/02/homework.md)  
 3. [第三章 构建目标系统](https://github.com/WangtaoPKU/Team666/blob/master/homework/03/chapter3.md)
-4. [第四章 项目实现](https://github.com/WangtaoPKU/Team666/blob/master/homework/04/Chapter4.md)
+4. [期末项目](https://github.com/WangtaoPKU/Team666/blob/master/homework/project/Readme.md)
